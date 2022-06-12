@@ -1,0 +1,8 @@
+{
+  "name": "goldNotifs",
+  "version": "0.0.0",
+  "main": "src/app.js",
+  "repository": "https://github.com/imkarimkarim/goldNotifs.git",
+  "author": "imkarimkarim <allalirezamail@gmail.com>",
+  "license": "MIT"
+}
