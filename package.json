@@ -2,7 +2,13 @@
   "name": "goldNotifs",
   "version": "0.0.0",
   "main": "src/app.js",
+  "scripts": {
+    "dev": "node src/app.js"
+  },
   "repository": "https://github.com/imkarimkarim/goldNotifs.git",
   "author": "imkarimkarim <allalirezamail@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer": "^14.3.0"
+  }
 }
