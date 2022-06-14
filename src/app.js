@@ -6,7 +6,10 @@ const extractfPrice = (html) => {
   if (!html) {
     return false;
   }
-  return parseInt(html[0] + html[1] + html[2] + html[4] + html[5] + html[6]);
+  const regex = /\d{3},\d{3}/g;
+  const strPrice = html.match(regex);
+  const price = parseInt(strPrice[0].replace(",", ""));
+  return price;
 };
 
 (async () => {
