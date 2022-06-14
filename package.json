@@ -2,6 +2,7 @@
   "name": "goldNotifs",
   "version": "0.0.0",
   "main": "src/app.js",
+  "type": "module",
   "scripts": {
     "dev": "node src/app.js"
   },
