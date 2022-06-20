@@ -14,9 +14,9 @@ export const isStatementTrue = (price, callback) => {
     const max = extractfPrice(data.max);
     if (price <= min || price >= max) {
       db.setSent(true);
-      callback(true);
+      if (isFunction(callback)) callback(true);
     } else {
-      callback(false);
+      if (isFunction(callback)) callback(false);
     }
   });
 };

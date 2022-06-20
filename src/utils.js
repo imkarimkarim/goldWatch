@@ -18,20 +18,25 @@ export const extractfPrice = (html) => {
   return price;
 };
 
-export const readDb = (callback) => {
+export const isFunction = (callback) => {
+  if (typeof callback === "function") {
+    return true;
+  }
+  return false;
+};
+
+export const readDB = (callback) => {
   let data;
   fs.readFile("src/db.json", (err, josn) => {
     if (err) {
       throw err;
     }
     data = JSON.parse(josn);
-    if (typeof callback === "function") {
-      callback(data);
-    }
+    if (isFunction(callback)) callback(data);
   });
 };
 
-export const writeDb = (key, value, callback) => {
+export const writeDB = (key, value, callback) => {
   let data;
   fs.readFile("src/db.json", (err, josn) => {
     if (err) {
@@ -44,16 +49,7 @@ export const writeDb = (key, value, callback) => {
       if (err) {
         throw err;
       }
-      if (typeof callback === "function") {
-        callback(data);
-      }
+      if (isFunction(callback)) callback(data);
     });
   });
-};
-
-export const isFunction = (callback) => {
-  if (typeof callback === "function") {
-    return true;
-  }
-  return false;
 };
