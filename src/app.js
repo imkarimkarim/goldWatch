@@ -1,10 +1,10 @@
 "use strict";
 
-// import { extractfPrice } from "./utils.js";
 import puppeteer from "puppeteer";
 import DB from "./db.js";
 import { isStatementTrue } from "./statmentChecker.js";
-import { extractfPrice } from "./utils.js";
+import { extractfPrice, addComma } from "./utils.js";
+import { notif } from "./notif.js";
 
 const db = new DB();
 const browser = await puppeteer.launch({ headless: false });
@@ -25,9 +25,10 @@ const loop = setInterval(async () => {
 
       isStatementTrue(price, (bool) => {
         if (bool) {
-          console.log("notif!");
+          console.log('notif!');
+          notif(`قیمت طلا: ${addComma(price)}`);
         } else {
-          console.log("not yet...");
+          console.log('not yet...');
         }
       });
     } else {

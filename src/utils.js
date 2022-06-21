@@ -8,6 +8,14 @@ const removeComma = (strPrice) => {
   return strPrice.replace(",", "");
 };
 
+export const addComma = (price) => {
+  if (!price) {
+    return false;
+  }
+  price = price.toString();
+  return price.slice(0,3) + ',' + price.slice(3, 6);
+};
+
 export const extractfPrice = (html) => {
   if (!html) {
     return false;
