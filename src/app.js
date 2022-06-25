@@ -12,7 +12,7 @@ const page = await browser.newPage();
 
 console.log("goint to tsetmc.com!");
 const url = "http://tsetmc.com/Loader.aspx?ParTree=151311&i=46700660505281786";
-await page.goto(url);
+await page.goto(url, { waitUntil: "load", timeout: 0 });
 console.log("getting the price in 10 second...");
 await page.waitForTimeout(10000);
 
@@ -25,10 +25,10 @@ const loop = setInterval(async () => {
 
       isStatementTrue(price, (bool) => {
         if (bool) {
-          console.log('notif!');
+          console.log("notif!");
           notif(`قیمت طلا: ${addComma(price)}`);
         } else {
-          console.log('not yet...');
+          console.log("not yet...");
         }
       });
     } else {
