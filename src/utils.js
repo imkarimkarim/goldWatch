@@ -5,7 +5,7 @@ const removeComma = (strPrice) => {
   if (!strPrice) {
     return false;
   }
-  return strPrice.replace(",", "");
+  return strPrice.replace(/,/g, "");
 };
 
 export const addComma = (price) => {
@@ -20,7 +20,7 @@ export const extractfPrice = (html) => {
   if (!html) {
     return false;
   }
-  const regex = /\d{3},\d{3}/g;
+  const regex = /\d{1,3},\d{1,3},?\d{1,3},?/;
   const strPrice = html.match(regex);
   const price = parseInt(removeComma(strPrice[0]));
   return price;
