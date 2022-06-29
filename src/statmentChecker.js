@@ -9,7 +9,8 @@ export const isStatementTrue = (price, callback) => {
   if (!price) {
     return false;
   }
-  setts.get((data) => {
+  (async () => {
+    const data = await setts.get();
     const min = extractfPrice(data.min);
     const max = extractfPrice(data.max);
     if (price <= min || price >= max) {
@@ -18,5 +19,5 @@ export const isStatementTrue = (price, callback) => {
     } else {
       if (isFunction(callback)) callback(false);
     }
-  });
+  })();
 };

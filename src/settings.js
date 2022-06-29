@@ -1,45 +1,29 @@
 "use strict";
 
-import { readSettings, writeSettings, isFunction } from "./utils.js";
+import { readSettings, writeSettings } from "./utils.js";
 
 export default class SETTINGS {
-  get(callback) {
-    readSettings((data) => {
-      if (isFunction(callback)) {
-        callback(data);
-      }
-    });
-  }
-
-  getMin(callback) {
-    readSettings((data) => {
-      if (isFunction(callback)) {
-        callback(data.min);
-      }
-    });
-  }
-
-  getMax(callback) {
-    readSettings((data) => {
-      if (isFunction(callback)) {
-        callback(data.max);
-      }
+  get() {
+    return new Promise((resolve) => {
+      readSettings((data) => {
+        resolve(data);
+      });
     });
   }
 
   getSymbol() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       readSettings((data) => {
         resolve(data.symbol);
       });
     });
   }
 
-  getSent(callback) {
-    readSettings((data) => {
-      if (isFunction(callback)) {
-        callback(data.sent);
-      }
+  getSent() {
+    return new Promise((resolve) => {
+      readSettings((data) => {
+        resolve(data.sent);
+      });
     });
   }
 
