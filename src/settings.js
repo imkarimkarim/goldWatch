@@ -27,18 +27,18 @@ export default class SETTINGS {
     });
   }
 
+  getSymbol() {
+    return new Promise((resolve, reject) => {
+      readSettings((data) => {
+        resolve(data.symbol);
+      });
+    });
+  }
+
   getSent(callback) {
     readSettings((data) => {
       if (isFunction(callback)) {
         callback(data.sent);
-      }
-    });
-  }
-
-  getInterval(callback) {
-    readSettings((data) => {
-      if (isFunction(callback)) {
-        callback(data.interval);
       }
     });
   }
