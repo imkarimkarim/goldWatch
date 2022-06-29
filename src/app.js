@@ -29,7 +29,7 @@ import { symbols } from "./symbols.js";
       isStatementTrue(price, (bool) => {
         if (bool) {
           console.log("notif!");
-          notif(`قیمت طلا: ${addComma(price)}`);
+          notif(`قیمت ${symbol}: ${addComma(price)}`);
         } else {
           console.log("not yet...");
         }

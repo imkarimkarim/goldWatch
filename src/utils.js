@@ -1,5 +1,4 @@
 "use strict";
-import fs from "fs";
 
 const removeComma = (strPrice) => {
   if (!strPrice) {
@@ -9,11 +8,18 @@ const removeComma = (strPrice) => {
 };
 
 export const addComma = (price) => {
-  if (!price) {
-    return false;
-  }
+  if (!price) return price;
   price = price.toString();
-  return price.slice(0,3) + ',' + price.slice(3, 6);
+  let newNum = "";
+  let count = 1;
+  for (let i = price.length - 1; i >= 0; i--) {
+    newNum = price[i] + newNum;
+    if (count % 3 === 0 && i !== price.length - 1 && i !== 0) {
+      newNum = "," + newNum;
+    }
+    count++;
+  }
+  return newNum;
 };
 
 export const extractfPrice = (html) => {
@@ -31,33 +37,4 @@ export const isFunction = (callback) => {
     return true;
   }
   return false;
-};
-
-export const readSettings = (callback) => {
-  let data;
-  fs.readFile("src/settings.json", (err, josn) => {
-    if (err) {
-      throw err;
-    }
-    data = JSON.parse(josn);
-    if (isFunction(callback)) callback(data);
-  });
-};
-
-export const writeSettings = (key, value, callback) => {
-  let data;
-  fs.readFile("src/settings.json", (err, josn) => {
-    if (err) {
-      throw err;
-    }
-    data = JSON.parse(josn);
-    data[key] = value;
-    const content = JSON.stringify(data);
-    fs.writeFile("src/settings.json", content, (err) => {
-      if (err) {
-        throw err;
-      }
-      if (isFunction(callback)) callback(data);
-    });
-  });
 };
