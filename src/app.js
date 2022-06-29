@@ -1,12 +1,12 @@
 "use strict";
 
 import puppeteer from "puppeteer";
-import DB from "./db.js";
+import SETTINGS from "./settings.js";
 import { isStatementTrue } from "./statmentChecker.js";
 import { extractfPrice, addComma } from "./utils.js";
 import { notif } from "./notif.js";
 
-const db = new DB();
+const setts = new SETTINGS();
 const browser = await puppeteer.launch({ headless: false });
 const page = await browser.newPage();
 
@@ -17,7 +17,7 @@ console.log("getting the price in 10 second...");
 await page.waitForTimeout(10000);
 
 const loop = setInterval(async () => {
-  db.getSent(async (sent) => {
+  setts.getSent(async (sent) => {
     if (!sent) {
       const html = await page.$eval("#d02", (el) => el.innerHTML);
       const price = extractfPrice(html);
@@ -32,7 +32,7 @@ const loop = setInterval(async () => {
         }
       });
     } else {
-      db.setSent(false);
+      setts.setSent(false);
       await browser.close();
       clearInterval(loop);
     }

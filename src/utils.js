@@ -33,9 +33,9 @@ export const isFunction = (callback) => {
   return false;
 };
 
-export const readDB = (callback) => {
+export const readSettings = (callback) => {
   let data;
-  fs.readFile("src/db.json", (err, josn) => {
+  fs.readFile("src/settings.json", (err, josn) => {
     if (err) {
       throw err;
     }
@@ -44,16 +44,16 @@ export const readDB = (callback) => {
   });
 };
 
-export const writeDB = (key, value, callback) => {
+export const writeSettings = (key, value, callback) => {
   let data;
-  fs.readFile("src/db.json", (err, josn) => {
+  fs.readFile("src/settings.json", (err, josn) => {
     if (err) {
       throw err;
     }
     data = JSON.parse(josn);
     data[key] = value;
     const content = JSON.stringify(data);
-    fs.writeFile("src/db.json", content, (err) => {
+    fs.writeFile("src/settings.json", content, (err) => {
       if (err) {
         throw err;
       }

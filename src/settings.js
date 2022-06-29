@@ -1,10 +1,10 @@
 "use strict";
 
-import { readDB, writeDB, isFunction } from "./utils.js";
+import { readSettings, writeSettings, isFunction } from "./utils.js";
 
-export default class DB {
+export default class SETTINGS {
   get(callback) {
-    readDB((data) => {
+    readSettings((data) => {
       if (isFunction(callback)) {
         callback(data);
       }
@@ -12,7 +12,7 @@ export default class DB {
   }
 
   getMin(callback) {
-    readDB((data) => {
+    readSettings((data) => {
       if (isFunction(callback)) {
         callback(data.min);
       }
@@ -20,7 +20,7 @@ export default class DB {
   }
 
   getMax(callback) {
-    readDB((data) => {
+    readSettings((data) => {
       if (isFunction(callback)) {
         callback(data.max);
       }
@@ -28,7 +28,7 @@ export default class DB {
   }
 
   getSent(callback) {
-    readDB((data) => {
+    readSettings((data) => {
       if (isFunction(callback)) {
         callback(data.sent);
       }
@@ -36,7 +36,7 @@ export default class DB {
   }
 
   getInterval(callback) {
-    readDB((data) => {
+    readSettings((data) => {
       if (isFunction(callback)) {
         callback(data.interval);
       }
@@ -44,6 +44,6 @@ export default class DB {
   }
 
   setSent(value, callback) {
-    writeDB("sent", value, callback);
+    writeSettings("sent", value, callback);
   }
 }
