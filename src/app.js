@@ -39,5 +39,5 @@ import { symbols } from "./symbols.js";
       await browser.close();
       clearInterval(loop);
     }
-  }, 1000 * 20);
+  }, 1000 * 60);
 })();
