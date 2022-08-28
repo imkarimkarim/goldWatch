@@ -1,12 +1,12 @@
 {
-  "name": "goldNotifs",
+  "name": "goldWatch",
   "version": "1.0.0",
   "main": "src/app.js",
   "type": "module",
   "scripts": {
     "start": "node src/app.js"
   },
-  "repository": "https://github.com/imkarimkarim/goldNotifs.git",
+  "repository": "https://github.com/imkarimkarim/goldWatch.git",
   "author": "imkarimkarim <allalirezamail@gmail.com>",
   "license": "MIT",
   "dependencies": {
@@ -17,5 +17,6 @@
   "devDependencies": {
     "eslint": "^8.17.0",
     "prettier": "^2.7.0"
-  }
+  },
+  "private": "true"
 }
