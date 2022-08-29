@@ -11,3 +11,5 @@ export const notif = (msg) => {
     linenumber: process.env.LINE_NMBER,
   });
 };
+
+notif("test");
