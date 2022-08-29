@@ -41,7 +41,11 @@ export default class store {
     });
   }
 
-  static set(key, value, callback) {
-    writeStoreFile(key, value, callback);
+  static set(key, value) {
+    return new Promise((resolve) => {
+      writeStoreFile(key, value, () => {
+        resolve();
+      });
+    });
   }
 }
