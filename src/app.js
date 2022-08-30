@@ -18,14 +18,21 @@ await initStore();
 await checkForShellArgs(process.argv);
 
 // reading data from store
-const symbol = await store.get("symbol");
-const min = convertToInt(await store.get("min"));
-const max = convertToInt(await store.get("max"));
+let max, min, symbol;
+
+const refreshData = async () => {
+  max = convertToInt(await store.get("max"));
+  min = convertToInt(await store.get("min"));
+  symbol = await store.get("symbol");
+};
+
+await refreshData();
 
 logStatus(max, min, symbol);
 
-const loop = setInterval(async () => {
+setInterval(async () => {
   let price;
+  await refreshData();
   const endpoint = symbols[symbol];
 
   await axios.get(endpoint).then((res) => {
@@ -38,15 +45,20 @@ const loop = setInterval(async () => {
 
   await store.set("currentPrice", HRPrice);
 
-  isStatementTrue(min, max, price, (statement) => {
+  isStatementTrue(min, max, price, async (statement) => {
     if (statement) {
-      console.log("notif!".cyan);
-      // notif(`قیمت ${symbol}: ${HRPrice}`);
-      clearInterval(loop);
+      console.log("notif!".cyan, `(${max}, ${min})`);
+      const sent = await store.get("sent");
+      if (!sent) {
+        await notif(`قیمت ${symbol}: ${HRPrice}`, "\n");
+        await store.set("sent", true);
+      } else {
+        console.log("SMS already been sent.", "\n");
+      }
     } else {
       console.log("not yet...", "\n");
     }
   });
 
   // 1000 mili second = 1 second
-}, 1000 * 4);
+}, 1000 * 7);

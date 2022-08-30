@@ -1,1 +1,7 @@
-{"symbol":"طلا","min":"0","max":"0","sent":false,"currentPrice":"93,602"}
+{
+  "symbol": "طلا",
+  "min": "11,000",
+  "max": "11,000",
+  "sent": true,
+  "currentPrice": "93,602"
+}
