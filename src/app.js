@@ -35,28 +35,22 @@ console.log(
 const url = symbols[symbol];
 
 const loop = setInterval(async () => {
-  const sent = await store.get("sent");
-  if (!sent) {
-    let price = 0;
-    await axios.get(url).then((res) => {
-      price = res.data.split(",")[2];
-    });
+  let price = 0;
+  await axios.get(url).then((res) => {
+    price = res.data.split(",")[2];
+  });
 
-    console.log(symbol.yellow, " current price: ", humanRedable(price).yellow);
-
-    isStatementTrue(min, max, price, (statement) => {
-      if (statement) {
-        console.log("notif!".cyan);
-        notif(`قیمت ${symbol}: ${humanRedable(price)}`);
-        store.set("sent", true);
-      } else {
-        console.log("not yet...", "\n");
-      }
-    });
-  } else {
-    store.set("sent", false);
-    clearInterval(loop);
-  }
+  console.log(symbol.yellow, " current price: ", humanRedable(price).yellow);
+  await store.set("currentPrice", humanRedable(price));
+  isStatementTrue(min, max, price, (statement) => {
+    if (statement) {
+      console.log("notif!".cyan);
+      notif(`قیمت ${symbol}: ${humanRedable(price)}`);
+      clearInterval(loop);
+    } else {
+      console.log("not yet...", "\n");
+    }
+  });
 
   // 1000 mili second = 1 second
 }, 1000 * 4);
