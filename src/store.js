@@ -24,9 +24,9 @@ export const initStore = async () => {
   await store.set("sent", false);
 };
 
-export const readStoreFile = (callback) => {
+export const readStoreFile = async (callback) => {
   let data;
-  fs.readFile("src/store.json", (err, json) => {
+  await fs.readFile("src/store.json", (err, json) => {
     if (err) {
       throw err;
     }
@@ -35,11 +35,12 @@ export const readStoreFile = (callback) => {
   });
 };
 
-export const writeStoreFile = (key, value, callback) => {
-  readStoreFile((data) => {
+export const writeStoreFile = async (key, value, callback) => {
+  await readStoreFile(async (data) => {
     data[key] = value;
     const content = JSON.stringify(data);
-    fs.writeFile("src/store.json", content, (err) => {
+    console.log("content: ", content);
+    await fs.writeFile("src/store.json", content, (err) => {
       if (err) {
         throw err;
       }

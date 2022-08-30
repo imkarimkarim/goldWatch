@@ -16,6 +16,7 @@ const main = () => {
               <h2 id="max">${data.max}</h2>
               <h2 id="min">${data.min}</h2>
             </div>
+            <h2 id="sent">sent: ${data.sent}</h2>
           <h2></h2></div>`;
         }
         console.log(res);
@@ -25,11 +26,40 @@ const main = () => {
       });
   }, 1000 * 3);
 
-  document.getElementById("button").addEventListener("click", () => {
+  const puff = `<img src="puff.svg" alt="loading image..." />`;
+
+  document.getElementById("editButton").addEventListener("click", () => {
+    document.querySelector("form").classList.toggle("hide");
+  });
+
+  document.getElementById("submitButton").addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const symbol = document.getElementById("symbolInput").value;
+    const max = document.getElementById("maxInput").value;
+    const min = document.getElementById("minInput").value;
+    const password = document.getElementById("passwordInput").value;
+
+    console.log(symbol, max, min, password);
+
     // eslint-disable-next-line no-undef
-    axios.post(baseUrl, {
-      message: "karim chetori?",
-    });
+    axios
+      .post(baseUrl, {
+        symbol: symbol,
+        max: max,
+        min: min,
+        password: password,
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          document.querySelector("form").classList.toggle("hide");
+          document.getElementById("data").innerHTML = puff;
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   });
 };
 

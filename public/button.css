@@ -68,3 +68,7 @@ button {
     opacity: 0;
   }
 }
+
+.blue {
+  background: royalblue;
+}
