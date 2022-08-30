@@ -20,7 +20,7 @@ const symbol = await store.get("symbol");
 const min = convertToInt(await store.get("min"));
 const max = convertToInt(await store.get("max"));
 
-console.log("working on: ", symbol);
+console.log("working on: ", min, ">", symbol, "<", max);
 const url = symbols[symbol];
 
 const loop = setInterval(async () => {
