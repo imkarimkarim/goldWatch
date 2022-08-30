@@ -1,4 +1,6 @@
+const url = "http://tsetmc.com/tsev2/data/instinfodata.aspx?i=";
+
 export const symbols = {
-  طلا: "http://tsetmc.com/Loader.aspx?ParTree=151311&i=46700660505281786",
-  سکه: "http://tsetmc.com/Loader.aspx?ParTree=151311&i=16255851958781005",
+  طلا: url + "46700660505281786&c=68%20&e=1",
+  سکه: url + "16255851958781005&c=56%20",
 };
