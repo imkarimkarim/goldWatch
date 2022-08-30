@@ -4,7 +4,9 @@
   "main": "src/app.js",
   "type": "module",
   "scripts": {
-    "start": "node src/app.js",
+    "app": "node src/app.js",
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
     "liara:login": "liara login",
     "liara:deploy": "liara deploy",
     "liara:shell": "liara shell"
@@ -16,11 +18,13 @@
     "axios": "^0.27.2",
     "colors": "^1.4.0",
     "dotenv": "^16.0.1",
+    "express": "^4.18.1",
     "ghasedak": "^0.2.1"
   },
   "devDependencies": {
     "@liara/cli": "^2.24.0",
     "eslint": "^8.17.0",
+    "nodemon": "^2.0.19",
     "prettier": "^2.7.0"
   },
   "private": "true"
