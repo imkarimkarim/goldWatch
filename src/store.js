@@ -20,6 +20,8 @@ export const initStore = async () => {
       }
     });
   }
+
+  await store.set("sent", false);
 };
 
 export const readStoreFile = (callback) => {
