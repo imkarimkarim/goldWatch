@@ -1,6 +1,6 @@
 "use strict";
 
-import store from "./store.js";
+import store, { initStore } from "./store.js";
 import { isStatementTrue } from "./statmentChecker.js";
 import {
   humanRedable,
@@ -14,7 +14,8 @@ import axios from "axios";
 // eslint-disable-next-line no-unused-vars
 import colors from "colors";
 
-await checkForShellArgs();
+await initStore();
+await checkForShellArgs(process.argv);
 
 // reading data from store
 const symbol = await store.get("symbol");
@@ -40,7 +41,7 @@ const loop = setInterval(async () => {
   isStatementTrue(min, max, price, (statement) => {
     if (statement) {
       console.log("notif!".cyan);
-      notif(`قیمت ${symbol}: ${HRPrice}`);
+      // notif(`قیمت ${symbol}: ${HRPrice}`);
       clearInterval(loop);
     } else {
       console.log("not yet...", "\n");

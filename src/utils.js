@@ -1,6 +1,6 @@
 "use strict";
 
-import store from "./store";
+import store from "./store.js";
 
 export const convertToInt = (strPrice) => {
   if (!strPrice) {

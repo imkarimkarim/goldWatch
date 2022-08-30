@@ -3,30 +3,32 @@
 import fs from "fs";
 import { isFunction } from "./utils.js";
 
-const initialStore = {
-  symbol: "طلا",
-  min: "0",
-  max: "0",
-  sent: false,
-  currentPrice: "0",
-};
+export const initStore = async () => {
+  const initialStore = {
+    symbol: "طلا",
+    min: "0",
+    max: "0",
+    sent: false,
+    currentPrice: "0",
+  };
 
-if (!(await fs.existsSync("src/store.json"))) {
-  const content = JSON.stringify(initialStore);
-  fs.writeFile("src/store.json", content, (err) => {
-    if (err) {
-      throw err;
-    }
-  });
-}
+  if (!(await fs.existsSync("src/store.json"))) {
+    const content = JSON.stringify(initialStore);
+    fs.writeFile("src/store.json", content, (err) => {
+      if (err) {
+        throw err;
+      }
+    });
+  }
+};
 
 export const readStoreFile = (callback) => {
   let data;
-  fs.readFile("src/store.json", (err, josn) => {
+  fs.readFile("src/store.json", (err, json) => {
     if (err) {
       throw err;
     }
-    data = JSON.parse(josn);
+    data = JSON.parse(json);
     if (isFunction(callback)) callback(data);
   });
 };
