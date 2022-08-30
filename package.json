@@ -4,7 +4,10 @@
   "main": "src/app.js",
   "type": "module",
   "scripts": {
-    "start": "node src/app.js"
+    "start": "node src/app.js",
+    "liara:login": "liara login",
+    "liara:deploy": "liara deploy",
+    "liara:shell": "liara shell"
   },
   "repository": "https://github.com/imkarimkarim/goldWatch.git",
   "author": "imkarimkarim <allalirezamail@gmail.com>",
@@ -16,6 +19,7 @@
     "ghasedak": "^0.2.1"
   },
   "devDependencies": {
+    "@liara/cli": "^2.24.0",
     "eslint": "^8.17.0",
     "prettier": "^2.7.0"
   },
