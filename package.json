@@ -10,9 +10,9 @@
   "author": "imkarimkarim <allalirezamail@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.27.2",
     "dotenv": "^16.0.1",
-    "ghasedak": "^0.2.1",
-    "puppeteer": "^14.3.0"
+    "ghasedak": "^0.2.1"
   },
   "devDependencies": {
     "eslint": "^8.17.0",
