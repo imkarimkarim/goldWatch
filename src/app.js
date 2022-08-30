@@ -1,43 +1,51 @@
 "use strict";
 
-import puppeteer from "puppeteer";
-import SETTINGS from "./settings.js";
+import store from "./store.js";
 import { isStatementTrue } from "./statmentChecker.js";
-import { extractfPrice, addComma } from "./utils.js";
+import { humanRedable, convertToInt } from "./utils.js";
 import { notif } from "./notif.js";
 import { symbols } from "./symbols.js";
+import axios from "axios";
 
-(async () => {
-  const setts = new SETTINGS();
-  const browser = await puppeteer.launch({ headless: true });
-  const page = await browser.newPage();
-  const symbol = await setts.getSymbol();
+// reading value from command line args(optional)
+const minArg = convertToInt(process.argv[2]);
+const maxArg = convertToInt(process.argv[3]);
+const symbolArg = process.argv[4];
+if (minArg !== undefined) await store.set("min", humanRedable(minArg));
+if (maxArg !== undefined) await store.set("max", humanRedable(maxArg));
+if (symbolArg !== undefined) await store.set("symbol", symbolArg);
 
-  console.log("goint to tsetmc.com!");
-  const url = symbols[symbol];
-  await page.goto(url, { waitUntil: "load", timeout: 0 });
-  console.log("getting the price in 10 second...");
-  await page.waitForTimeout(10000);
+// reading data from store
+const symbol = await store.get("symbol");
+const min = convertToInt(await store.get("min"));
+const max = convertToInt(await store.get("max"));
 
-  const loop = setInterval(async () => {
-    const sent = await setts.getSent();
-    if (!sent) {
-      const html = await page.$eval("#d02", (el) => el.innerHTML);
-      const price = extractfPrice(html);
-      console.log("current price: ", price);
+console.log("working on: ", symbol);
+const url = symbols[symbol];
 
-      isStatementTrue(price, (bool) => {
-        if (bool) {
-          console.log("notif!");
-          notif(`قیمت ${symbol}: ${addComma(price)}`);
-        } else {
-          console.log("not yet...");
-        }
-      });
-    } else {
-      setts.setSent(false);
-      await browser.close();
-      clearInterval(loop);
-    }
-  }, 1000 * 20);
-})();
+const loop = setInterval(async () => {
+  const sent = await store.get("sent");
+  if (!sent) {
+    let price = 0;
+    await axios.get(url).then((res) => {
+      price = res.data.split(",")[2];
+    });
+
+    console.log(symbol, " current price: ", humanRedable(price));
+
+    isStatementTrue(min, max, price, (statement) => {
+      if (statement) {
+        console.log("notif!");
+        notif(`قیمت ${symbol}: ${humanRedable(price)}`);
+        store.set("sent", true);
+      } else {
+        console.log("not yet...");
+      }
+    });
+  } else {
+    store.set("sent", false);
+    clearInterval(loop);
+  }
+
+  // 1000 mili second = 1 second
+}, 1000 * 4);

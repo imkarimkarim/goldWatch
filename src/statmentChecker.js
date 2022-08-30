@@ -1,23 +1,17 @@
 "use strict";
 
-import { extractfPrice, isFunction } from "./utils.js";
+import { isFunction, convertToInt } from "./utils.js";
 
-import SETTINGS from "./settings.js";
-const setts = new SETTINGS();
+export const isStatementTrue = async (min, max, price, callback) => {
+  if (!min || !max || !price) return;
 
-export const isStatementTrue = (price, callback) => {
-  if (!price) {
-    return false;
+  min = convertToInt(min);
+  max = convertToInt(max);
+  price = convertToInt(price);
+
+  if (price <= min || price >= max) {
+    if (isFunction(callback)) callback(true);
+  } else {
+    if (isFunction(callback)) callback(false);
   }
-  (async () => {
-    const data = await setts.get();
-    const min = extractfPrice(data.min);
-    const max = extractfPrice(data.max);
-    if (price <= min || price >= max) {
-      setts.setSent(true);
-      if (isFunction(callback)) callback(true);
-    } else {
-      if (isFunction(callback)) callback(false);
-    }
-  })();
 };

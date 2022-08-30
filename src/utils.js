@@ -1,13 +1,14 @@
 "use strict";
 
-const removeComma = (strPrice) => {
+export const convertToInt = (strPrice) => {
   if (!strPrice) {
     return false;
   }
-  return strPrice.replace(/,/g, "");
+  strPrice = strPrice.toString();
+  return parseInt(strPrice.replace(/,/g, ""));
 };
 
-export const addComma = (price) => {
+export const humanRedable = (price) => {
   if (!price) return price;
   price = price.toString();
   let newNum = "";
@@ -20,16 +21,6 @@ export const addComma = (price) => {
     count++;
   }
   return newNum;
-};
-
-export const extractfPrice = (html) => {
-  if (!html) {
-    return false;
-  }
-  const regex = /\d{1,3},\d{1,3},?\d{1,3},?/;
-  const strPrice = html.match(regex);
-  const price = parseInt(removeComma(strPrice[0]));
-  return price;
 };
 
 export const isFunction = (callback) => {
