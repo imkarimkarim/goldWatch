@@ -19,3 +19,7 @@ example:
 ```shell
 yarn start "90,000" "100,000" "طلا"
 ```
+
+## Docs
+
+[DOCS.md](DOCS.md)
