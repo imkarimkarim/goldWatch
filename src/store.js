@@ -39,7 +39,6 @@ export const writeStoreFile = async (key, value, callback) => {
   await readStoreFile(async (data) => {
     data[key] = value;
     const content = JSON.stringify(data);
-    console.log("content: ", content);
     await fs.writeFile("src/store.json", content, (err) => {
       if (err) {
         throw err;

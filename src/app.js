@@ -50,7 +50,7 @@ setInterval(async () => {
       console.log("notif!".cyan, `(${max}, ${min})`);
       const sent = await store.get("sent");
       if (!sent) {
-        await notif(`قیمت ${symbol}: ${HRPrice}`, "\n");
+        // await notif(`قیمت ${symbol}: ${HRPrice}`, "\n");
         await store.set("sent", true);
       } else {
         console.log("SMS already been sent.", "\n");
@@ -61,4 +61,4 @@ setInterval(async () => {
   });
 
   // 1000 mili second = 1 second
-}, 1000 * 7);
+}, 1000 * 5);
