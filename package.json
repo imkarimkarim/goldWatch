@@ -11,11 +11,6 @@
     "liara:deploy": "liara deploy",
     "liara:shell": "liara shell"
   },
-  "nodemonConfig": {
-    "ignore": [
-      "src/store.json"
-    ]
-  },
   "repository": "https://github.com/imkarimkarim/goldWatch.git",
   "author": "imkarimkarim <allalirezamail@gmail.com>",
   "license": "MIT",

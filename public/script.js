@@ -28,7 +28,7 @@ const main = () => {
           console.error(err);
         });
     }
-  }, 1000 * 10);
+  }, 1000 * 5);
 
   const puff = `<img src="puff.svg" alt="loading image..." />`;
 
@@ -62,7 +62,7 @@ const main = () => {
           flag = false;
           setTimeout(() => {
             flag = true;
-          }, 10000);
+          }, 1000 * 5);
         }
       })
       .catch((err) => {
