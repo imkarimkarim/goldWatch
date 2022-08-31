@@ -3,27 +3,56 @@
 import fs from "fs";
 import { isFunction } from "./utils.js";
 
-export const readStoreFile = (callback) => {
+let appDataPath, path;
+if (process.platform === "win32") {
+  appDataPath = process.env.TEMP + "\\goldWatch";
+  path = appDataPath + "\\store.json";
+} else {
+  appDataPath = process.env.TEMP + "/goldWatch";
+  path = appDataPath + "/store.json";
+}
+
+if (!(await fs.existsSync(appDataPath))) {
+  await fs.mkdirSync(appDataPath);
+}
+
+export const initStore = async () => {
+  const initialStore = {
+    symbol: "طلا",
+    min: "0",
+    max: "0",
+    sent: false,
+    currentPrice: "0",
+  };
+
+  if (!(await fs.existsSync(path))) {
+    const content = JSON.stringify(initialStore);
+    fs.writeFile(path, content, (err) => {
+      if (err) {
+        throw err;
+      }
+    });
+  }
+
+  await store.set("sent", false);
+};
+
+export const readStoreFile = async (callback) => {
   let data;
-  fs.readFile("src/store.json", (err, josn) => {
+  await fs.readFile(path, (err, json) => {
     if (err) {
       throw err;
     }
-    data = JSON.parse(josn);
+    data = JSON.parse(json);
     if (isFunction(callback)) callback(data);
   });
 };
 
-export const writeStoreFile = (key, value, callback) => {
-  let data;
-  fs.readFile("src/store.json", (err, josn) => {
-    if (err) {
-      throw err;
-    }
-    data = JSON.parse(josn);
+export const writeStoreFile = async (key, value, callback) => {
+  await readStoreFile(async (data) => {
     data[key] = value;
     const content = JSON.stringify(data);
-    fs.writeFile("src/store.json", content, (err) => {
+    await fs.writeFile(path, content, (err) => {
       if (err) {
         throw err;
       }
@@ -43,8 +72,8 @@ export default class store {
 
   static set(key, value) {
     return new Promise((resolve) => {
-      writeStoreFile(key, value, () => {
-        resolve();
+      writeStoreFile(key, value, (data) => {
+        resolve(data);
       });
     });
   }

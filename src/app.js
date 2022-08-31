@@ -1,62 +1,65 @@
 "use strict";
 
-import store from "./store.js";
+import store, { initStore } from "./store.js";
 import { isStatementTrue } from "./statmentChecker.js";
-import { humanRedable, convertToInt } from "./utils.js";
+import {
+  humanRedable,
+  convertToInt,
+  checkForShellArgs,
+  logStatus,
+} from "./utils.js";
 import { notif } from "./notif.js";
 import { symbols } from "./symbols.js";
 import axios from "axios";
 // eslint-disable-next-line no-unused-vars
 import colors from "colors";
 
-// reading value from command line args(optional)
-const maxArg = process.argv[2];
-const minArg = process.argv[3];
-const symbolArg = process.argv[4];
-if (maxArg !== undefined) await store.set("max", humanRedable(maxArg));
-if (minArg !== undefined) await store.set("min", humanRedable(minArg));
-if (symbolArg !== undefined) await store.set("symbol", symbolArg);
+await initStore();
+await checkForShellArgs(process.argv);
 
 // reading data from store
-const symbol = await store.get("symbol");
-const min = convertToInt(await store.get("min"));
-const max = convertToInt(await store.get("max"));
+let max, min, symbol;
 
-console.log(
-  "\n",
-  `working on:
-  ${humanRedable(max)} <= ${symbol}
-  ${humanRedable(min)} >= ${symbol}`.cyan,
-  "\n",
-  "\n",
-  "------------------- goldWatch -------------------".yellow,
-  "\n"
-);
-const url = symbols[symbol];
+const refreshData = async () => {
+  max = convertToInt(await store.get("max"));
+  min = convertToInt(await store.get("min"));
+  symbol = await store.get("symbol");
+};
 
-const loop = setInterval(async () => {
-  const sent = await store.get("sent");
-  if (!sent) {
-    let price = 0;
-    await axios.get(url).then((res) => {
-      price = res.data.split(",")[2];
-    });
+await refreshData();
 
-    console.log(symbol.yellow, " current price: ", humanRedable(price).yellow);
+logStatus(max, min, symbol);
 
-    isStatementTrue(min, max, price, (statement) => {
-      if (statement) {
-        console.log("notif!".cyan);
-        notif(`قیمت ${symbol}: ${humanRedable(price)}`);
-        store.set("sent", true);
+setInterval(async () => {
+  let price;
+  await refreshData();
+  const endpoint = symbols[symbol];
+
+  await axios.get(endpoint).then((res) => {
+    price = res.data.split(",")[2];
+  });
+
+  const HRPrice = humanRedable(price);
+
+  console.log(symbol.yellow, " current price: ", HRPrice.yellow);
+
+  await store.set("currentPrice", HRPrice);
+
+  isStatementTrue(min, max, price, async (statement) => {
+    if (statement) {
+      console.log("notif!".cyan, `(${max}, ${min})`);
+      const sent = await store.get("sent");
+      if (!sent) {
+        await notif(`قیمت ${symbol}: ${HRPrice}`);
+        console.log();
+        await store.set("sent", true);
       } else {
-        console.log("not yet...", "\n");
+        console.log("SMS already been sent.", "\n");
       }
-    });
-  } else {
-    store.set("sent", false);
-    clearInterval(loop);
-  }
+    } else {
+      console.log("not yet...", "\n");
+    }
+  });
 
   // 1000 mili second = 1 second
-}, 1000 * 4);
+}, 1000 * 5);

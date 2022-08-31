@@ -1,5 +1,7 @@
 "use strict";
 
+import store from "./store.js";
+
 export const convertToInt = (strPrice) => {
   if (!strPrice) {
     return false;
@@ -28,4 +30,27 @@ export const isFunction = (callback) => {
     return true;
   }
   return false;
+};
+
+export const checkForShellArgs = async (processArgs) => {
+  // reading value from command line args(optional)
+  const maxArg = processArgs[2];
+  const minArg = processArgs[3];
+  const symbolArg = processArgs[4];
+  if (maxArg !== undefined) await store.set("max", humanRedable(maxArg));
+  if (minArg !== undefined) await store.set("min", humanRedable(minArg));
+  if (symbolArg !== undefined) await store.set("symbol", symbolArg);
+};
+
+export const logStatus = (max, min, symbol) => {
+  console.log(
+    "\n",
+    `working on:
+  ${max} <= ${symbol}
+  ${min} >= ${symbol}`.cyan,
+    "\n",
+    "\n",
+    "------------------- goldWatch -------------------".yellow,
+    "\n"
+  );
 };
