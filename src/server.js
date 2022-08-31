@@ -48,5 +48,5 @@ server.post("/api", async (req, res) => {
 });
 
 server.listen(port, () => {
-  console.log(`app listening on port ${port}`);
+  console.log(`app listening on port ${port}`, "\n");
 });
