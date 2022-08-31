@@ -50,7 +50,7 @@ setInterval(async () => {
       console.log("notif!".cyan, `(${max}, ${min})`);
       const sent = await store.get("sent");
       if (!sent) {
-        // await notif(`قیمت ${symbol}: ${HRPrice}`);
+        await notif(`قیمت ${symbol}: ${HRPrice}`);
         console.log();
         await store.set("sent", true);
       } else {
