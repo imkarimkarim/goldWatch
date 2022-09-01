@@ -1,6 +1,5 @@
 "use strict";
 
-import store, { initStore } from "./store.js";
 import { isStatementTrue } from "./statmentChecker.js";
 import {
   humanRedable,
@@ -13,17 +12,17 @@ import { symbols } from "./symbols.js";
 import axios from "axios";
 // eslint-disable-next-line no-unused-vars
 import colors from "colors";
+import redis from "./redisClient.js";
 
-await initStore();
 await checkForShellArgs(process.argv);
 
 // reading data from store
 let max, min, symbol;
 
 const refreshData = async () => {
-  max = convertToInt(await store.get("max"));
-  min = convertToInt(await store.get("min"));
-  symbol = await store.get("symbol");
+  max = convertToInt(await redis.get("max"));
+  min = convertToInt(await redis.get("min"));
+  symbol = await redis.get("symbol");
 };
 
 await refreshData();
@@ -43,16 +42,16 @@ setInterval(async () => {
 
   console.log(symbol.yellow, " current price: ", HRPrice.yellow);
 
-  await store.set("currentPrice", HRPrice);
+  await redis.set("currentPrice", HRPrice);
 
   isStatementTrue(min, max, price, async (statement) => {
     if (statement) {
       console.log("notif!".cyan, `(${max}, ${min})`);
-      const sent = await store.get("sent");
+      const sent = await redis.get("sent");
       if (!sent) {
         await notif(`قیمت ${symbol}: ${HRPrice}`);
         console.log();
-        await store.set("sent", true);
+        await redis.set("sent", true);
       } else {
         console.log("SMS already been sent.", "\n");
       }
