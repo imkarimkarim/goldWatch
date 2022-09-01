@@ -1,6 +1,6 @@
 "use strict";
 
-import store from "./store.js";
+import redis from "./redisClient.js";
 
 export const convertToInt = (strPrice) => {
   if (!strPrice) {
@@ -37,9 +37,9 @@ export const checkForShellArgs = async (processArgs) => {
   const maxArg = processArgs[2];
   const minArg = processArgs[3];
   const symbolArg = processArgs[4];
-  if (maxArg !== undefined) await store.set("max", humanRedable(maxArg));
-  if (minArg !== undefined) await store.set("min", humanRedable(minArg));
-  if (symbolArg !== undefined) await store.set("symbol", symbolArg);
+  if (maxArg !== undefined) await redis.set("max", humanRedable(maxArg));
+  if (minArg !== undefined) await redis.set("min", humanRedable(minArg));
+  if (symbolArg !== undefined) await redis.set("symbol", symbolArg);
 };
 
 export const logStatus = (max, min, symbol) => {

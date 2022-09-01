@@ -1,17 +1,31 @@
 import express from "express";
-import store from "./store.js";
 import bcrypt from "bcrypt";
 import bodyParser from "body-parser";
 import "dotenv/config";
-const saltRounds = 10;
+import redis from "./redisClient.js";
+import { humanRedable } from "./utils.js";
 
 const server = express();
 server.use(express.static("public"));
 server.use(bodyParser.json());
 const port = 3000;
 
+redis.on("connect", function () {
+  console.log("Connected to Redis!");
+});
+
+redis.on("error", (err) => {
+  console.log("Error " + err);
+});
+
+// set default values
+await redis.set("symbol", "طلا");
+await redis.set("max", "0");
+await redis.set("min", "0");
+await redis.set("sent", "true");
+await redis.set("currentPrice", "0");
+
 import "./app.js";
-import { humanRedable } from "./utils.js";
 
 server.get("/", (req, res) => {
   res.send("index.html");
@@ -19,11 +33,11 @@ server.get("/", (req, res) => {
 
 server.get("/api", async (req, res) => {
   res.send({
-    symbol: await store.get("symbol"),
-    min: await store.get("min"),
-    max: await store.get("max"),
-    currentPrice: await store.get("currentPrice"),
-    sent: await store.get("sent"),
+    symbol: await redis.get("symbol"),
+    max: await redis.get("max"),
+    min: await redis.get("min"),
+    sent: await redis.get("sent"),
+    currentPrice: await redis.get("currentPrice"),
   });
 });
 
@@ -36,11 +50,11 @@ server.post("/api", async (req, res) => {
       const min = req.body.min;
       const symbol = req.body.symbol;
 
-      await store.set("sent", false);
+      await redis.set("sent", false);
 
-      if (max !== undefined) await store.set("max", humanRedable(max));
-      if (min !== undefined) await store.set("min", humanRedable(min));
-      if (symbol !== undefined) await store.set("symbol", symbol);
+      if (max !== undefined) await redis.set("max", humanRedable(max));
+      if (min !== undefined) await redis.set("min", humanRedable(min));
+      if (symbol !== undefined) await redis.set("symbol", symbol);
 
       res.sendStatus(200);
     }
