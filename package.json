@@ -7,7 +7,6 @@
     "app": "node src/app.js",
     "start": "set ENV=prod&& node src/server.js",
     "dev": "set ENV=dev&& nodemon src/server.js",
-    "pl": "set ENV=dev&& nodemon src/playground.js",
     "liara:login": "liara login",
     "liara:deploy": "liara deploy",
     "liara:shell": "liara shell"
