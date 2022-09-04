@@ -10,15 +10,7 @@ yarn
 
 ## Run
 
-```shell
-yarn start <max> <min> <symbol>
-```
-
-example:
-
-```shell
-yarn start "90,000" "100,000" "طلا"
-```
+check pacakge.json `scripts:{}`
 
 ## Docs
 
