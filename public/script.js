@@ -1,5 +1,5 @@
 const main = () => {
-  const baseUrl = "http://localhost:3000/api";
+  const api = document.URL + "api";
 
   let flag = true;
 
@@ -7,7 +7,7 @@ const main = () => {
     if (flag) {
       // eslint-disable-next-line no-undef
       axios
-        .get(baseUrl)
+        .get(api)
         .then((res) => {
           if (res.status === 200) {
             const data = res.data;
@@ -48,7 +48,7 @@ const main = () => {
 
     // eslint-disable-next-line no-undef
     axios
-      .post(baseUrl, {
+      .post(api, {
         symbol: symbol,
         max: max,
         min: min,
