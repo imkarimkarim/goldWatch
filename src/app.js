@@ -19,6 +19,13 @@ await checkForShellArgs(process.argv);
 // reading data from store
 let max, min, symbol;
 
+// set default values
+await redis.set("symbol", "طلا");
+await redis.set("max", "0");
+await redis.set("min", "0");
+await redis.set("sent", "true");
+await redis.set("currentPrice", "0");
+
 const refreshData = async () => {
   max = convertToInt(await redis.get("max"));
   min = convertToInt(await redis.get("min"));
@@ -48,10 +55,10 @@ setInterval(async () => {
     if (statement) {
       console.log("notif!".cyan, `(${max}, ${min})`);
       const sent = await redis.get("sent");
-      if (!sent) {
-        await notif(`قیمت ${symbol}: ${HRPrice}`);
+      if (sent === "false") {
+        // await notif(`قیمت ${symbol}: ${HRPrice}`);
         console.log();
-        await redis.set("sent", true);
+        await redis.set("sent", "true");
       } else {
         console.log("SMS already been sent.", "\n");
       }

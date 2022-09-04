@@ -5,6 +5,8 @@ import "dotenv/config";
 import redis from "./redisClient.js";
 import { humanRedable } from "./utils.js";
 
+import "./app.js";
+
 const server = express();
 server.use(express.static("public"));
 server.use(bodyParser.json());
@@ -17,15 +19,6 @@ redis.on("connect", function () {
 redis.on("error", (err) => {
   console.log("Error " + err);
 });
-
-// set default values
-await redis.set("symbol", "طلا");
-await redis.set("max", "0");
-await redis.set("min", "0");
-await redis.set("sent", "true");
-await redis.set("currentPrice", "0");
-
-import "./app.js";
 
 server.get("/", (req, res) => {
   res.send("index.html");
@@ -50,11 +43,10 @@ server.post("/api", async (req, res) => {
       const min = req.body.min;
       const symbol = req.body.symbol;
 
-      await redis.set("sent", false);
-
       if (max !== undefined) await redis.set("max", humanRedable(max));
       if (min !== undefined) await redis.set("min", humanRedable(min));
       if (symbol !== undefined) await redis.set("symbol", symbol);
+      await redis.set("sent", "false");
 
       res.sendStatus(200);
     }
