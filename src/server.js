@@ -2,6 +2,7 @@ import express from "express";
 import bcrypt from "bcrypt";
 import bodyParser from "body-parser";
 import "dotenv/config";
+import cors from "cors";
 import redis from "./redisClient.js";
 import { humanRedable } from "./utils.js";
 
@@ -10,6 +11,7 @@ import "./app.js";
 const server = express();
 server.use(express.static("public"));
 server.use(bodyParser.json());
+server.use(cors());
 
 server.get("/", (req, res) => {
   res.send("index.html");
