@@ -56,7 +56,11 @@ setInterval(async () => {
       console.log("notif!".cyan, `(${max}, ${min})`);
       const sent = await redis.get("sent");
       if (sent === "false") {
-        // await notif(`قیمت ${symbol}: ${HRPrice}`);
+        if (process.env.ENV == "dev") {
+          console.log("hypothetical SMS has been sent successfully.", "\n");
+        } else {
+          await notif(`قیمت ${symbol}: ${HRPrice}`);
+        }
         console.log();
         await redis.set("sent", "true");
       } else {
