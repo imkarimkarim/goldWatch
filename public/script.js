@@ -22,7 +22,6 @@ const main = () => {
             <h2 id="sent">sent: ${data.sent}</h2>
           <h2></h2></div>`;
           }
-          console.log(res);
         })
         .catch((err) => {
           console.error(err);
@@ -44,8 +43,6 @@ const main = () => {
     const min = document.getElementById("minInput").value;
     const password = document.getElementById("passwordInput").value;
 
-    console.log(symbol, max, min, password);
-
     // eslint-disable-next-line no-undef
     axios
       .post(api, {
@@ -55,7 +52,6 @@ const main = () => {
         password: password,
       })
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           document.querySelector("form").classList.toggle("hide");
           document.getElementById("data").innerHTML = puff;
