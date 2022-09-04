@@ -10,7 +10,6 @@ import "./app.js";
 const server = express();
 server.use(express.static("public"));
 server.use(bodyParser.json());
-const port = 3000;
 
 server.get("/", (req, res) => {
   res.send("index.html");
@@ -43,6 +42,8 @@ server.post("/api", async (req, res) => {
   });
 });
 
-server.listen(port, () => {
+const port = process.env.PORT || 3000;
+
+server.listen(3000, () => {
   console.log(`app listening on port ${port}`, "\n");
 });
