@@ -12,14 +12,6 @@ server.use(express.static("public"));
 server.use(bodyParser.json());
 const port = 3000;
 
-redis.on("connect", function () {
-  console.log("Connected to Redis!");
-});
-
-redis.on("error", (err) => {
-  console.log("Error " + err);
-});
-
 server.get("/", (req, res) => {
   res.send("index.html");
 });
@@ -35,8 +27,6 @@ server.get("/api", async (req, res) => {
 });
 
 server.post("/api", async (req, res) => {
-  console.log(req.body);
-
   bcrypt.compare(req.body.password, process.env.HASH, async (err, result) => {
     if (result) {
       const max = req.body.max;
