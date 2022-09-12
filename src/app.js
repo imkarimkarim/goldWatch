@@ -19,12 +19,22 @@ await checkForShellArgs(process.argv);
 // reading data from store
 let max, min, symbol;
 
-// set default values
-await redis.set("symbol", "طلا");
-await redis.set("max", "0");
-await redis.set("min", "0");
-await redis.set("sent", "true");
-await redis.set("currentPrice", "0");
+// set default values if not setted yet
+if (!(await redis.get("symbol"))) {
+  await redis.set("symbol", "طلا");
+}
+if (!(await redis.get("max"))) {
+  await redis.set("max", "0");
+}
+if (!(await redis.get("min"))) {
+  await redis.set("min", "0");
+}
+if (!(await redis.get("sent"))) {
+  await redis.set("sent", "true");
+}
+if (!(await redis.get("currentPrice"))) {
+  await redis.set("currentPrice", "0");
+}
 
 const refreshData = async () => {
   max = convertToInt(await redis.get("max"));
