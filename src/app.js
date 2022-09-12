@@ -41,9 +41,14 @@ setInterval(async () => {
   await refreshData();
   const endpoint = symbols[symbol];
 
-  await axios.get(endpoint).then((res) => {
-    price = res.data.split(",")[2];
-  });
+  await axios
+    .get(endpoint)
+    .then((res) => {
+      price = res.data.split(",")[2];
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 
   const HRPrice = humanRedable(price);
 
