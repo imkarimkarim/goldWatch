@@ -1,3 +1,9 @@
+export const convertToInt = (strPrice) => {
+  if (!strPrice) return strPrice;
+  strPrice = strPrice.toString();
+  return parseInt(strPrice.replace(/,/g, ""));
+};
+
 const main = () => {
   const api = document.URL + "api";
 
@@ -39,8 +45,8 @@ const main = () => {
     e.preventDefault();
 
     const symbol = document.getElementById("symbolInput").value;
-    const max = document.getElementById("maxInput").value;
-    const min = document.getElementById("minInput").value;
+    const max = convertToInt(document.getElementById("maxInput").value);
+    const min = convertToInt(document.getElementById("minInput").value);
     const password = document.getElementById("passwordInput").value;
 
     // eslint-disable-next-line no-undef
@@ -65,6 +71,15 @@ const main = () => {
         console.error(err);
       });
   });
+
+  const priceInputs = document.querySelectorAll(".priceInputs");
+  for (const input of priceInputs) {
+    input.addEventListener("input", (e) => {
+      input.value = new Intl.NumberFormat().format(
+        convertToInt(e.target.value)
+      );
+    });
+  }
 };
 
 // Check if the DOMContentLoaded has already been completed
