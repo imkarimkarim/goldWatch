@@ -47,10 +47,10 @@ export const logStatus = (max, min, symbol) => {
     "\n",
     `working on:
   ${max} <= ${symbol}
-  ${min} >= ${symbol}`.cyan,
+  ${min} >= ${symbol}`,
     "\n",
     "\n",
-    "------------------- goldWatch -------------------".yellow,
+    "------------------- goldWatch -------------------",
     "\n"
   );
 };

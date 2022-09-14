@@ -10,8 +10,6 @@ import {
 import { notif } from "./notif.js";
 import { symbols } from "./symbols.js";
 import axios from "axios";
-// eslint-disable-next-line no-unused-vars
-import colors from "colors";
 import redis from "./redisClient.js";
 
 await checkForShellArgs(process.argv);
@@ -62,13 +60,13 @@ setInterval(async () => {
 
   const HRPrice = humanRedable(price);
 
-  console.log(symbol.yellow, " current price: ", HRPrice.yellow);
+  console.log(symbol, " current price: ", HRPrice);
 
   await redis.set("currentPrice", HRPrice);
 
   isStatementTrue(min, max, price, async (statement) => {
     if (statement) {
-      console.log("notif!".cyan, `(${max}, ${min})`);
+      console.log("notif!", `(${max}, ${min})`);
       const sent = await redis.get("sent");
       if (sent === "false") {
         if (process.env.ENV == "dev") {
