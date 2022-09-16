@@ -72,7 +72,7 @@ const main = () => {
       });
   });
 
-  const priceInputs = document.querySelectorAll(".priceInputs");
+  const priceInputs = document.querySelectorAll(".priceInput");
   for (const input of priceInputs) {
     input.addEventListener("input", (e) => {
       input.value = new Intl.NumberFormat().format(
