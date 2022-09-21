@@ -4,9 +4,9 @@ name: First Cron Job
 
        # Controls when the workflow will run
 on:
-  # Triggers the workflow every 5 minutes
+  # Triggers the workflow every 7 minutes
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "*/7 * * * *"
 
      # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
