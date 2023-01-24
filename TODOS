@@ -1,3 +1,4 @@
 TODO packaging it as a command-line tool
 TODO set interval from command line args
 TODO --no-sms feature
+TODO add windows support
