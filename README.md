@@ -1,17 +1,12 @@
-# goldNotifs
+# goldWatch
 
-## Install
+a command line tool to watch gold price changes in iran bourse market for linux and macOS
 
-```shell
+## Usage
+
+```bash
 git clone https://github.com/imkarimkarim/goldWatch.git
 cd goldWatch
-pnpm i
+pnpm install # or npm install
+yarn gw <min> <max> # or npm run gw
 ```
-
-## Run
-
-check pacakge.json `scripts:{}`
-
-## Docs
-
-[DOCS.md](DOCS.md)

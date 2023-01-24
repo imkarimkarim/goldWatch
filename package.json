@@ -1,34 +1,27 @@
 {
-  "name": "goldWatch",
-  "version": "1.0.0",
-  "main": "src/app.js",
-  "type": "module",
+  "name": "gold-watch",
+  "version": "0.0.0",
+  "description": " a command line tool to watch gold price changes in iran bourse market",
+  "main": "gw.ts",
   "scripts": {
-    "app": "node src/app.js",
-    "start": "set ENV=prod&& node src/server.js",
-    "dev": "set ENV=dev&& nodemon src/server.js",
-    "liara:login": "liara login",
-    "liara:deploy": "liara deploy",
-    "liara:shell": "liara shell"
+    "start": "node gw.js",
+    "gw": "node gw.js",
+    "lint": "eslint ."
   },
-  "repository": "https://github.com/imkarimkarim/goldWatch.git",
-  "author": "imkarimkarim <allalirezamail@gmail.com>",
-  "license": "MIT",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "axios": "^0.27.2",
-    "bcrypt": "^5.0.1",
-    "body-parser": "^1.20.0",
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.1",
-    "express": "^4.18.1",
-    "ghasedak": "^0.2.1",
-    "ioredis": "^5.2.3"
+    "axios": "^1.2.3",
+    "dotenv": "^16.0.3",
+    "ghasedak": "^0.2.1"
   },
   "devDependencies": {
-    "@liara/cli": "^2.24.0",
-    "eslint": "^8.17.0",
-    "nodemon": "^2.0.19",
-    "prettier": "^2.7.0"
-  },
-  "private": "true"
+    "eslint": "^8.32.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-standard": "^5.0.0"
+  }
 }
