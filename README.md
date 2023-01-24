@@ -5,7 +5,7 @@
 ```shell
 git clone https://github.com/imkarimkarim/goldWatch.git
 cd goldWatch
-yarn
+pnpm i
 ```
 
 ## Run
