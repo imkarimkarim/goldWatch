@@ -46,11 +46,11 @@ const convertToInt = (strPrice) => {
 
 const logStatus = (min, max, price) => {
   console.log(
-    `condition:
+      `condition:
     ${humanReadable(price)} <= ${humanReadable(min)} 
-    ${humanReadable(max)} <= ${humanReadable(price)}
+    ${humanReadable(price)} >= ${humanReadable(max)} 
     `,
-    "\n"
+      '\n'
   );
 };
 
