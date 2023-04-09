@@ -69,17 +69,17 @@ const checkStatement = (min, max, price, callback) => {
 };
 
 const notif = (msg) => {
-  exec("xdg-open ./ding.mp3");
-  exec("xdg-open ./ding.png");
-  if (!msg) return false;
-  exec("xdg-open pwd");
-  const message = msg;
-  let ghasedak = new Ghasedak(process.env.API_KEY);
-  ghasedak.send({
-    message: message,
-    receptor: process.env.RECEPTOR,
-    linenumber: process.env.LINE_NUMBER,
-  });
+    exec('xdg-open ./ding.mp3');
+    exec('xdg-open ./ding.png');
+    if (!msg) return false;
+    exec('xdg-open pwd');
+    // const message = msg;
+    // let ghasedak = new Ghasedak(process.env.API_KEY);
+    // ghasedak.send({
+    //   message: message,
+    //   receptor: process.env.RECEPTOR,
+    //   linenumber: process.env.LINE_NUMBER,
+    // });
 };
 
 (async () => {
