@@ -8,12 +8,12 @@ const { exec } = require('child_process');
 require('dotenv').config();
 
 const getPrice = async () => {
-    const goldEndPoint = 'http://tsetmc.com/tsev2/data/instinfodata.aspx?i=46700660505281786&c=68%20&e=1';
+    const goldEndPoint = 'https://cdn.tsetmc.com/api/ClosingPrice/GetClosingPriceInfo/25559236668122210';
 
     return axios
         .get(goldEndPoint)
         .then((res) => {
-            const price = res.data.split(',')[2];
+            const price = res.data.closingPriceInfo.pDrCotVal;
             return parseInt(price);
         })
         .catch((err) => {
@@ -71,7 +71,7 @@ const notif = (msg) => {
     exec(`xdg-open ${__dirname}/ding.mp3`);
     exec(`xdg-open ${__dirname}/ding.png`);
     if (!msg) return false;
-    exec('xdg-open pwd');
+    // exec('xdg-open pwd');
     // const message = msg;
     // let ghasedak = new Ghasedak(process.env.API_KEY);
     // ghasedak.send({
