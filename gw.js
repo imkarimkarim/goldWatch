@@ -13,7 +13,7 @@ const getPrice = async () => {
     return axios
         .get(goldEndPoint)
         .then((res) => {
-            const price = res.data.closingPriceInfo.pClosing;
+            const price = res.data.closingPriceInfo.pDrCotVal;
             return parseInt(price);
         })
         .catch((err) => {
